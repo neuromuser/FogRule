@@ -1,0 +1,13 @@
+{
+  "itemGroup.fogrule": "Example Mod Tab",
+  "block.fogrule.example_block": "Example Block",
+  "item.fogrule.example_item": "Example Item",
+
+  "fogrule.configuration.title": "Fog Rule Configs",
+  "fogrule.configuration.section.fogrule.common.toml": "Fog Rule Configs",
+  "fogrule.configuration.section.fogrule.common.toml.title": "Fog Rule Configs",
+  "fogrule.configuration.items": "Item List",
+  "fogrule.configuration.logDirtBlock": "Log Dirt Block",
+  "fogrule.configuration.magicNumberIntroduction": "Magic Number Text",
+  "fogrule.configuration.magicNumber": "Magic Number"
+}
