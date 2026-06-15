@@ -19,6 +19,7 @@ public class ClearZone {
     }
 
     private static final List<ClearZone> ZONES = new ArrayList<>(); //
+    
     public static void setCozyZone(float cx, float cz, float radius) {
         if (ZONES.isEmpty()) {
             ZONES.add(new ClearZone(cx, cz, radius));

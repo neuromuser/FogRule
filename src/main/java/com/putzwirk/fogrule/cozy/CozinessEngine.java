@@ -112,6 +112,7 @@ public class CozinessEngine {
 
         LevelChunk chunk = level.getChunkSource().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
         if (chunk == null) return;
+        if (chunk.getPos().x == 0 && chunk.getPos().z == 0) return;
 
         ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
         int packedPos = ChunkCozinessData.packPos(pos);
@@ -141,6 +142,7 @@ public class CozinessEngine {
         BlockPos origin = event.getPos();
         LevelChunk chunk = serverLevel.getChunkSource().getChunk(origin.getX() >> 4, origin.getZ() >> 4, false);
         if (chunk == null) return;
+        if (chunk.getPos().x == 0 && chunk.getPos().z == 0) return;
 
         ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
         boolean layoutChanged = false;
@@ -191,6 +193,7 @@ public class CozinessEngine {
                 if (stateAfter.getBlock() instanceof FlowerPotBlock) {
                     LevelChunk chunk = serverLevel.getChunkSource().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
                     if (chunk == null) return;
+                    if (chunk.getPos().x == 0 && chunk.getPos().z == 0) return;
 
                     ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
                     int packedPos = ChunkCozinessData.packPos(pos);
@@ -216,6 +219,7 @@ public class CozinessEngine {
 
         LevelChunk chunk = level.getChunkSource().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
         if (chunk == null) return;
+        if (chunk.getPos().x == 0 && chunk.getPos().z == 0) return;
 
         ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
         int packedPos = ChunkCozinessData.packPos(pos);
@@ -250,6 +254,7 @@ public class CozinessEngine {
         for (BlockPos pos : event.getAffectedBlocks()) {
             LevelChunk chunk = serverLevel.getChunkSource().getChunk(pos.getX() >> 4, pos.getZ() >> 4, false);
             if (chunk == null) continue;
+            if (chunk.getPos().x == 0 && chunk.getPos().z == 0) continue;
 
             ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
             int packedPos = ChunkCozinessData.packPos(pos);

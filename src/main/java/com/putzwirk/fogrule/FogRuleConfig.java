@@ -11,9 +11,9 @@ public class FogRuleConfig {
     // FOG
     // -------------------------------------------------------------------------
 
-    public static final ModConfigSpec.DoubleValue SAFE_RADIUS = BUILDER
-            .comment("Safe-zone radius (blocks) around world origin (0,0). Players inside see clear sky.")
-            .defineInRange("fog.safeRadius", 100.0, 0.0, 10000.0);
+    public static final ModConfigSpec.DoubleValue SPAWN_COZINESS = BUILDER
+            .comment("Default coziness at 0,0 chunk coordinates. Note that clearance can't be bigger than MAX_COZY_CLEARANCE_RANGE.")
+            .defineInRange("fog.spawnChunkCoziness", 40.0, 0.0, 10000.0);
 
     public static final ModConfigSpec.DoubleValue MAX_FOG_FADE_DISTANCE = BUILDER
             .comment("Distance (blocks) over which fog fades in at a safe zone edge. Lower = sharper wall.")

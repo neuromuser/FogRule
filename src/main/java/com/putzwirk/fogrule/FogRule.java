@@ -3,6 +3,7 @@ package com.putzwirk.fogrule;
 import com.putzwirk.fogrule.abandoned.DecayRules;
 import com.putzwirk.fogrule.cozy.ChunkCozinessData;
 import com.putzwirk.fogrule.cozy.CozinessPacket;
+import com.putzwirk.fogrule.cozy.SpawnChunkCoziness;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.api.distmarker.Dist;
@@ -29,6 +30,7 @@ public class FogRule {
         if (FMLEnvironment.dist == Dist.CLIENT) {
             NeoForge.EVENT_BUS.register(new FogHandler());
             NeoForge.EVENT_BUS.register(DebugMenuHandler.class);
+            NeoForge.EVENT_BUS.register(SpawnChunkCoziness.class);
         }
     }
 
