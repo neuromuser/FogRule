@@ -12,7 +12,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import com.putzwirk.fogrule.abandoned.DecayRule.Result;
 import com.putzwirk.fogrule.cozy.ChunkCozinessData;
-import com.putzwirk.fogrule.cozy.CozinessEngine;
 import net.minecraft.world.level.chunk.LevelChunk;
 
 import java.util.ArrayList;
@@ -53,7 +52,6 @@ public class DecayRules {
                 LevelChunk chunk = ctx.level().getChunkSource().getChunk(ctx.pos().getX() >> 4, ctx.pos().getZ() >> 4, false);
                 if (chunk != null) {
                     ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
-                    CozinessEngine.recalculateCoziness(ctx.level(), chunk, data);
                 }
                 return Result.MUTATED_KEEP;
             }
@@ -64,11 +62,13 @@ public class DecayRules {
             if (ctx.elapsedUnits() >= 800L && ctx.abandonedCoziness() >= COZINESS_THRESHOLD) {
                 var chunk = ctx.level().getChunkSource().getChunk(ctx.pos().getX() >> 4, ctx.pos().getZ() >> 4, false);
                 if (chunk != null) {
+                    ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
                     if (ctx.random().nextFloat() < 0.02f) {
                         for (var dir : Direction.values()) {
                             var p = ctx.pos().relative(dir);
                             if (ctx.level().isEmptyBlock(p)) {
                                 ctx.level().setBlock(p, Blocks.COBWEB.defaultBlockState(), 3);
+                                data.getPackedPositions().add(ChunkCozinessData.packPos(p));
                                 break;
                             }
                         }
@@ -155,6 +155,7 @@ public class DecayRules {
             return s -> s.getBlock() == b;
         } catch (Exception e) { return null; }
     }
+
 
     private static void addRule(Predicate<BlockState> match, java.util.function.Function<DecayContext, Result> apply) {
         RULES.add(new DecayRule() {

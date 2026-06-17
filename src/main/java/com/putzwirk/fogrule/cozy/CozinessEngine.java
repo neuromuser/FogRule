@@ -120,6 +120,7 @@ public class CozinessEngine {
         if (!(event.getChunk() instanceof LevelChunk chunk)) return;
 
         ChunkCozinessData data = chunk.getData(ChunkCozinessData.CHUNK_DATA);
+        setupSpawnChunk(chunk, data);
 
         IntOpenHashSet positions = CozyDatabase.loadPositions(chunk.getPos().x, chunk.getPos().z);
         data.getPackedPositions().clear();
@@ -150,6 +151,14 @@ public class CozinessEngine {
                 queuedDecayPositions.add(chunk.getPos());
             }
         }
+    }
+
+    private static void setupSpawnChunk(LevelChunk chunk, ChunkCozinessData data) {
+        float spawnChunkCoziness = FogRuleConfig.SPAWN_CHUNK_COZINESS.get().floatValue();
+        if (spawnChunkCoziness == 0.0f) return;
+        if (chunk.getPos().x != 0 || chunk.getPos().z != 0) { return; }
+
+        data.setCoziness(spawnChunkCoziness);
     }
 
     @SubscribeEvent
@@ -366,14 +375,10 @@ public class CozinessEngine {
             }
         }
 
-        double finalSum;
         if (weightedSum >= 0) {
-            finalSum = Math.pow(weightedSum, 0.75);
-        } else {
-            finalSum = weightedSum;
+            weightedSum = Math.pow(weightedSum, FogRuleConfig.CLEARANCE_EFFECTIVENESS_EXPONENT.getAsDouble());
         }
-
-        float clearance = (float) (finalSum * FogRuleConfig.CLEARANCE_MULTIPLIER.get());
+        float clearance = (float) (weightedSum * FogRuleConfig.CLEARANCE_MULTIPLIER.get());
 
         PacketDistributor.sendToPlayer(player, new ClearancePacket(clearance));
     }

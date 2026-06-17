@@ -32,18 +32,16 @@ public class FogRuleConfig {
     public static final ModConfigSpec.LongValue DECAY_TRIGGER_TICKS = BUILDER
             .defineInRange("decay.triggerTicks", 1L, 1L, Long.MAX_VALUE);
 
-    public static final ModConfigSpec.DoubleValue COBWEB_SPAWN_CHANCE_MAX = BUILDER
-            .defineInRange("decay.cobwebSpawnChanceMax", 0.005, 0.0, 1.0);
+    public static final ModConfigSpec.BooleanValue COBWEB_GENERATION = BUILDER
+            .define("decay.cobwebGeneration", true);
 
-    public static final ModConfigSpec.LongValue COBWEB_CHANCE_RAMP_UNITS = BUILDER
-            .defineInRange("decay.cobwebChanceRampUnits", 5000L, 1L, Long.MAX_VALUE);
+    public static final ModConfigSpec.DoubleValue SPAWN_CHUNK_COZINESS = BUILDER
+            .defineInRange("coziness.spawnChunkCoziness", 100.0, 0.0, 500.0);
 
-    public static final ModConfigSpec.LongValue COBWEB_SPAWN_START_UNITS = BUILDER
-            .defineInRange("decay.cobwebSpawnStartUnits", 800L, 0L, Long.MAX_VALUE);
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> BLOCK_COZINESS_VALUES = BUILDER
             .defineListAllowEmpty(
-                    "blockCozinessValues",
+                    "coziness.blockCozinessValues",
                     List.of(
                             "minecraft:torch 1.0",
                             "minecraft:wall_torch 1.0",
@@ -53,24 +51,30 @@ public class FogRuleConfig {
                             "minecraft:mossy_cobblestone -0.1",
                             "minecraft:cobblestone 0.15",
                             "minecraft:dirt_path 0.2",
-                            "#minecraft:wool_carpets 0.8"
+                            "#minecraft:wool_carpets 0.8",
+                            "#minecraft:glass 0.8",
+                            "#minecraft:glass_panes 0.8",
+                            "#minecraft:stained_glass_panes 0.8"
                     ),
                     o -> o instanceof String s && isValidCozinessEntry(s)
             );
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> DIMINISHING_BLOCK_GROUPS = BUILDER
             .defineListAllowEmpty(
-                    "diminishingBlockGroups",
+                    "coziness.diminishingBlockGroups",
                     List.of(
-                            "minecraft:torch minecraft:wall_torch 10",
-                            "minecraft:lantern 10"
+                            "minecraft:torch minecraft:wall_torch minecraft:lantern minecraft:soul_lantern 10",
+                            "minecraft:campfire 1",
+                            "#minecraft:wool_carpets 16"
                     ),
                     o -> o instanceof String s && isValidDiminishingEntry(s)
             );
 
+
+
     public static final ModConfigSpec.ConfigValue<List<? extends String>> DECAY_RULES = BUILDER
             .defineListAllowEmpty(
-                    "decayRules",
+                    "decay.decayRules",
                     List.of(
                             "BREAK minecraft:fire 30",
                             "BREAK minecraft:soul_fire 30",
@@ -81,7 +85,6 @@ public class FogRuleConfig {
                             "BREAK minecraft:glass 400",
                             "BREAK #minecraft:stained_glass 400",
                             "BREAK #minecraft:stained_glass_panes 400",
-                            "BREAK minecraft:iron_bars 400",
                             "BREAK minecraft:glowstone 500",
                             "BREAK minecraft:shroomlight 600",
                             "MUTATE minecraft:cobblestone minecraft:mossy_cobblestone 500 10000 0.001",
@@ -92,7 +95,7 @@ public class FogRuleConfig {
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> FOG_ALLOWED_MOBS = BUILDER
             .defineListAllowEmpty(
-                    "fogAllowedMobs",
+                    "mobs.fogAllowedMobs",
                     List.of(
                             "minecraft:zombie",
                             "minecraft:skeleton",
